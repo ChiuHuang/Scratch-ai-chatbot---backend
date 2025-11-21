@@ -45,7 +45,7 @@ function encodeText(text, defaultChar = " ") {
         number += indexString;
     }
     
-    // Replace 4049 with 00 (optimization)
+    // Replace 4049 with 00 (newline)
     return number.replaceAll("4049", "00");
 }
 
