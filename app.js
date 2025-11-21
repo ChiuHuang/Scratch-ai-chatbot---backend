@@ -94,7 +94,7 @@ function splitNumericStringIntoChunks(encodedResponse) {
     // If message too long, cut it off and warn
     const maxAllowed = chunkSize * TOTAL_CHUNKS;
     if (encodedResponse.length > maxAllowed) {
-        const warn = encodeText("nw data over size limit, auto cutting.");
+        const warn = encodeText("nwSystem note: data over size limit, auto cutting.");
         chunks[TOTAL_CHUNKS - 1] = warn.substring(0, MAX);
     }
 
@@ -140,7 +140,7 @@ async function generateResponse(prompt) {
     return data.candidates[0].content.parts[0].text;
   } catch (err) {
     console.error("AI error:", err.message);
-    return "Sorry, I couldn't generate a response.nwTry asking something simple.";
+    return "Sorry, I couldn't generate a response.nwTry asking something simple. nw(server error)";
   }
 }
 
@@ -243,7 +243,7 @@ async function main() {
         const chunks = splitNumericStringIntoChunks(encodedAiResponse);
         console.log(`Split into ${chunks.length} chunks`);
 
-        // Send chunks to Scratch (backwards, chunk 8 to 1)
+        // Send chunks to Scratch (backwards, chunk 8 to 1) so it checks the 1
         for (let i = TOTAL_CHUNKS - 1; i >= 0; i--) {
             const varName = `Public.Respond.Chunk${i + 1}c`;
             const chunkData = chunks[i] || "0";
